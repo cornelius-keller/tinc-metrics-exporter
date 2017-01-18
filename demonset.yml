@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  namespace: monitoring
+  name: tinc-metrics-exporter
+spec:
+  template:
+    metadata:
+      name:  tinc-metrics-exporter
+      labels:
+        name: tic-metrics-exporter
+    spec:
+      hostNetwork: true
+      containers:
+      - name:  tinc-metrix-exporter
+        image: quay.io/cornelius/tinc-metrics-exporter
+        securityContext:
+          privileged: true
+        hostNetwork: true
