@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  namespace: monitoring
+  name: tinc-metrics-exporter
+spec:
+  template:
+    metadata:
+      name:  tinc-metrics-exporter
+      labels:
+        name: tic-metrics-exporter
+    spec:
+      hostNetwork: true
+      containers:
+      - name:  tinc-metrix-exporter
+        image: quay.io/cornelius/tinc-metrics-exporter
+        securityContext:
+          privileged: true
+        env:
+            - name: TINC_CONF_DIR
+              value: /srv/tinc
+            - name: PROM_STATS_DIR
+              value: /opt/prometheus/stats
+
+        volumeMounts:
+        - name: tinc
+          mountPath: /srv/tinc
+          readOnly: true
+        - name: opt
+          mountPath: /opt
+          readOnly: false
+      volumes:
+      - name: opt
+        hostPath:
+          path: /opt
+      - name: tinc
+        hostPath:
+          path: /srv/tinc
