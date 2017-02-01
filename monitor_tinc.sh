@@ -10,14 +10,14 @@ while true; do
     response_time=$(ping -c 1 $node |grep time= | awk '{ print $7}' | sed -e  's/time=//')
      if [ $? -eq 0 ]; then
        echo "# HELP tinc_node_$( echo $node | sed -e 's/\./_/g')_up reachability of $node via the network overlay" >> $OUTFILE.$$
-       echo  tinc_node_$( echo $node | sed -e 's/\./_/g')_up{hostname=\"$HOSTNAME\"} 1 >> $OUTFILE.$$
+       echo  tinc_node_$( echo $node | sed -e 's/\./_/g')_up{hostname=\"$HOSTNAME\"} 1 $(date +%s%N) >> $OUTFILE.$$
        echo "# HELP tinc_node_$( echo $node | sed -e 's/\./_/g')_response_time response time  of $node via the network overlay" >> $OUTFILE.$$
-       echo tinc_node_$( echo $node | sed -e 's/\./_/g')_response_time{hostname=\"$HOSTNAME\"} $response_time >> $OUTFILE.$$
+       echo tinc_node_$( echo $node | sed -e 's/\./_/g')_response_time{hostname=\"$HOSTNAME\"} $response_time $(date +%s%N) >> $OUTFILE.$$
      else
        echo "# HELP tinc_node_$( echo $node | sed -e 's/\./_/g')_up reachability of $node via the network overlay" >> $OUTFILE.$$
-       echo tinc_node_$( echo $node | sed -e 's/\./_/g')_up{hostname=\"$HOSTNAME\"} 0 >> $OUTFILE.$$
+       echo tinc_node_$( echo $node | sed -e 's/\./_/g')_up{hostname=\"$HOSTNAME\"} 0 $(date +%s%N)>> $OUTFILE.$$
        echo "# HELP tinc_node_$( echo $node | sed -e 's/\./_/')_response_time response time  of $node via the network overlay" >> $OUTFILE.$$
-       echo tinc_node_$( echo $node | sed -e 's/\./_/g')_response_time{hostname=\"$HOSTNAME\"} -1 >> $OUTFILE.$$
+       echo tinc_node_$( echo $node | sed -e 's/\./_/g')_response_time{hostname=\"$HOSTNAME\"} -1 $(date +%s%N)>> $OUTFILE.$$
      fi
   done
 
