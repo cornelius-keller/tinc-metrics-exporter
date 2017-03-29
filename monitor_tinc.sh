@@ -13,7 +13,7 @@ while true; do
     node=$(awk '/Subnet/ {gsub(/0\/[0-9]+/, "1"); print $3}' ${nodefile})
     prom_node=$(echo ${node} | tr '.' '_')
     response_time=$(ping -c 1 ${node} | awk '/time=/ {gsub(/time=/, ""); print $7}')
-    if [ $? -eq 0 ]; then
+    if [ $response_time != "" ]; then
       UP=1
     else
       UP=0
