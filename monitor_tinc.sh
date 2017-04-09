@@ -6,7 +6,7 @@ OUTFILE="${PROM_STATS_DIR}/tinc.prom"
 
 while true; do
   echo "" > ${OUTFILE}.$$
-  for nodefile in hosts/core*; do
+  for nodefile in hosts/*; do
     if [ ! -f "${nodefile}" ]; then
       continue
     fi
